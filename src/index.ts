@@ -15,7 +15,8 @@ function isRecord(value: unknown): value is ProviderPayload {
 }
 
 function hasTools(payload: ProviderPayload): boolean {
-	return Array.isArray(payload.tools) && payload.tools.length > 0;
+	const tools = payload["tools"];
+	return Array.isArray(tools) && tools.length > 0;
 }
 
 export function addOpenAIApiParallelToolCallsToPayload(api: Api | undefined, payload: unknown): unknown {
@@ -23,7 +24,7 @@ export function addOpenAIApiParallelToolCallsToPayload(api: Api | undefined, pay
 		return payload;
 	}
 
-	if (!isRecord(payload) || !hasTools(payload) || payload.parallel_tool_calls !== undefined) {
+	if (!isRecord(payload) || !hasTools(payload) || payload["parallel_tool_calls"] !== undefined) {
 		return payload;
 	}
 
